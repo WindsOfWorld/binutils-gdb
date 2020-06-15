@@ -207,6 +207,11 @@ class File_read
   static void
   print_stats();
 
+  // Write the dependency file listing all files read.
+  static void
+  write_dependency_file(const char* dependency_file_name,
+                        const char* output_file_name);
+
   // Return the open file descriptor (for plugins).
   int
   descriptor()
@@ -214,7 +219,7 @@ class File_read
     this->reopen_descriptor();
     return this->descriptor_;
   }
-  
+
   // Return the file last modification time.  Calls gold_fatal if the stat
   // system call failed.
   Timespec
@@ -246,6 +251,9 @@ class File_read
   // High water mark of bytes mapped into memory during the link if
   // --stats.
   static unsigned long long maximum_mapped_bytes;
+
+  // Set of names of all files read.
+  static std::vector<std::string> files_read;
 
   // A view into the file.
   class View
